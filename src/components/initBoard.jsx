@@ -1,24 +1,21 @@
-import React from 'react';
-import $ from 'jquery';
+import React, { useEffect } from 'react';
 import { board, boardLength } from './CreateBoard';
+import GetRandomIndex from './GetRandomIndex';
 
 function InitBoard() {
-
-    board.forEach((cell, index) => {
-        const CUBE_ELEMENT = $(<div></div>).attr({
-            class: 'cube',
-            id: index
-        })
-        $("#board").append(CUBE_ELEMENT);
-        $("#board").css({
-            width: 50 * boardLength,
-            height: 50 * boardLength,
-            "grid-template-columns": "repeat(" + boardLength + ", 1fr)",
+    useEffect(() => {
+        const BOARD_ELEMENT = document.getElementById("board");
+        board.forEach((cell, index) => {
+            const CUBE_ELEMENT = document.createElement("div");
+            CUBE_ELEMENT.className = "cube"
+            CUBE_ELEMENT.id = index
+            BOARD_ELEMENT.appendChild(CUBE_ELEMENT);
+            BOARD_ELEMENT.style.width = `${50 * boardLength}px`;
+            BOARD_ELEMENT.style.height = `${50 * boardLength}px`;
+            BOARD_ELEMENT.style.gridTemplateColumns = `repeat(${boardLength}, 1fr)`;
         });
-
-
-    })
+    }, []);
 }
-
+GetRandomIndex();
 export default InitBoard;
 

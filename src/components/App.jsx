@@ -3,7 +3,7 @@ import RenderBoard from './RenderBoard';
 
 function App() {
     return (
-        <div>
+        <div className='container'>
             <RenderBoard />
         </div>
     );
