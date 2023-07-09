@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
 import { board, boardLength } from './CreateBoard';
-import GetRandomIndex from './GetRandomIndex';
 
 function InitBoard() {
+    debugger;
     useEffect(() => {
         const BOARD_ELEMENT = document.getElementById("board");
+
         board.forEach((cell, index) => {
             const CUBE_ELEMENT = document.createElement("div");
             CUBE_ELEMENT.className = "cube"
@@ -15,7 +16,7 @@ function InitBoard() {
             BOARD_ELEMENT.style.gridTemplateColumns = `repeat(${boardLength}, 1fr)`;
         });
     }, []);
+    return null;
 }
-GetRandomIndex();
 export default InitBoard;
 
