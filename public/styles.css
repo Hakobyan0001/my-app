@@ -1,55 +1,56 @@
 /* main container*/
 .container {
-    margin: auto;
-    display: flex;
-    justify-content: center;
+  margin: auto;
+  display: flex;
+  justify-content: center;
 }
 
 .input-group {
-    margin-left: auto;
-    margin-right: auto;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* board side */
 #board {
-    background-color: #eee;
-    display: grid;
+  background-color: #eee;
+  display: flex;
+  flex-wrap: wrap;
 }
 
-.cube {
-    box-sizing: border-box;
-    width: 50px;
-    height: 50px;
-    border: 1px solid #808080;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.cell {
+  box-sizing: border-box;
+  width: 50px;
+  height: 50px;
+  border: 1px solid #808080;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .ball {
-    position: absolute;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
+  position: absolute;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
 }
 
 .selectedBall {
-    position: absolute;
-    border-radius: 50%;
-    opacity: 60%;
-    width: 35px;
-    height: 35px;
+  position: absolute;
+  border-radius: 50%;
+  opacity: 60%;
+  width: 35px;
+  height: 35px;
 }
 
 /* colors for balls */
 .red {
-    background-color: red;
+  background-color: red;
 }
 
 .green {
-    background-color: green;
+  background-color: green;
 }
 
 .blue {
-    background-color: blue;
+  background-color: blue;
 }
