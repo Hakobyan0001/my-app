@@ -1,6 +1,10 @@
 import Ball from "./Ball";
-function Cell({ hasBall }) {
-  return <div className="cell">{hasBall ? <Ball /> : null}</div>;
+function Cell({ hasBall, id }) {
+  return (
+    <div className="cell" id={id}>
+      {hasBall ? <Ball /> : null}
+    </div>
+  );
 }
 
 export default Cell;
