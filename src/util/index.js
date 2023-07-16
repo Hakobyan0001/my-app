@@ -1,3 +1,4 @@
+
 function getRandomBalls(board, emptyCellsIndices) {
   const BALLS_COUNT = 3;
 
@@ -12,6 +13,7 @@ function getRandomBalls(board, emptyCellsIndices) {
 
   return board;
 }
+
 function getEmptyCells(board) {
   let emptyCellsIndices = board.map((element, index) => index);
   return emptyCellsIndices;
