@@ -9,7 +9,7 @@ function Board({ board, boardLength }) {
   });
   return (
     <div id="board" style={{ width }}>
-      {updatedBoard.map((cell, index) => (
+      {updatedBoard.map((cell) => (
         <Cell hasBall={cell.hasBall} key={cell.id} id={cell.id} />
       ))}
     </div>

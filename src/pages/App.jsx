@@ -3,21 +3,20 @@ import Board from "../components/Board";
 import { getRandomBalls, getEmptyCells } from "../util";
 
 function App() {
-  const CELL = {
-    hasBall: false,
-    id: 0,
-  };
-  const BOARD_LENGTH = 9;
+  const BOARD_LENGTH = 2;
   const [board, setBoard] = useState([]);
 
   useEffect(() => {
-    const renderedBoard = Array.from({ length: BOARD_LENGTH ** 2 }, () => ({
+    const CELL = {
+      hasBall: false,
+    };
+    let RENDERED_BOARD = Array.from({ length: BOARD_LENGTH ** 2 }, () => ({
       ...CELL,
     }));
-    setBoard(renderedBoard);
+    setBoard(RENDERED_BOARD);
 
-    let emptyCellsIndices = getEmptyCells(renderedBoard);
-    const updatedBoard = getRandomBalls(renderedBoard, emptyCellsIndices);
+    let emptyCellsIndices = getEmptyCells(RENDERED_BOARD);
+    const updatedBoard = getRandomBalls(RENDERED_BOARD, emptyCellsIndices);
     setBoard(updatedBoard);
   }, []);
   return (
