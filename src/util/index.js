@@ -1,37 +1,31 @@
-function getRandomBalls(board, emptyCellsIndices) {
-  const BALLS_COUNT = 3;
-
-  for (let i = 0; i < BALLS_COUNT; i++) {
-    const RANDOM_INDEX = getRandomIndex(emptyCellsIndices);
-    board[RANDOM_INDEX] = {
-      ...board[RANDOM_INDEX],
+function addBallinBoard(board, indices) {
+  indices.forEach((index) => {
+    board[index] = {
+      ...board[index],
       hasBall: true,
     };
-    emptyCellsIndices = emptyCellsIndices.filter(
-      (el) => el !== emptyCellsIndices[RANDOM_INDEX]
-    );
-  }
-
-  return board;
+  });
 }
 
 function getEmptyCells(board) {
   let emptyCellsIndices = board.map((element, index) => index);
+
   return emptyCellsIndices;
 }
 
-// let currentBallsNumbers = [];
+function getRandomIndices(emptyCellsIndices) {
+  let indices = [...emptyCellsIndices];
+  const BALLS_COUNT = 3;
+  let ballsIndices = [];
 
-function getRandomIndex(emptyCellsIndices) {
-  const RANDOM_INDEX = Math.floor(Math.random() * emptyCellsIndices.length);
-  console.log(RANDOM_INDEX);
+  for (let i = 0; i < BALLS_COUNT; i++) {
+    const RANDOM_INDEX = Math.floor(Math.random() * indices.length);
+    const chosenIndex = indices[RANDOM_INDEX];
 
-  // if (currentBallsNumbers.includes(RANDOM_INDEX)) {
-  //   getRandomIndex(emptyCellsIndices);
-  // } else {
-  // currentBallsNumbers.push(RANDOM_INDEX);
-  return RANDOM_INDEX;
-  // }
+    indices.splice(RANDOM_INDEX, 1);
+    ballsIndices.push(chosenIndex);
+  }
+  return ballsIndices;
 }
 
-export { getEmptyCells, getRandomBalls };
+export { getEmptyCells, getRandomIndices, addBallinBoard };

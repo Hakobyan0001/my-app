@@ -3,6 +3,7 @@ import { useState } from "react";
 
 function Cell({ hasBall, id }) {
   const [isActive, setIsActive] = useState(false);
+
   function handelCellClick() {
     if (isActive === false) {
       setIsActive(true);
