@@ -11,7 +11,6 @@ function App() {
     const CELL = {
       hasBall: false,
     };
-
     let RENDERED_BOARD = Array.from({ length: BOARD_LENGTH ** 2 }, () => CELL);
 
     const emptyCellsIndices = getEmptyCells(RENDERED_BOARD);

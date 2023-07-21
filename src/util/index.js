@@ -1,3 +1,11 @@
+function updatingBoard(board) {
+  let newBoard = board.map((cell, index) => {
+    const uniqueId = `${index}`;
+    return { ...cell, id: uniqueId };
+  });
+  return newBoard;
+}
+
 function getEmptyCells(board) {
   let emptyCellsIndices = board.map((element, index) => index);
 
@@ -5,13 +13,11 @@ function getEmptyCells(board) {
 }
 
 function getRandomIndices(emptyCellsIndices) {
-
   let indices = [...emptyCellsIndices];
   const BALLS_COUNT = 3;
   let ballsIndices = [];
 
   for (let i = 0; i < BALLS_COUNT; i++) {
-
     const RANDOM_INDEX = Math.floor(Math.random() * indices.length);
     const chosenIndex = indices[RANDOM_INDEX];
 
@@ -22,6 +28,11 @@ function getRandomIndices(emptyCellsIndices) {
   return ballsIndices;
 }
 
+function getRandomColor() {
+  const COLORS = ["red", "blue", "green"];
+  const RANDOM_COLOR = Math.floor(Math.random() * COLORS.length);
+  return COLORS[RANDOM_COLOR];
+}
 function addBallinBoard(board, indices) {
   indices.forEach((index) => {
     board[index] = {
@@ -31,8 +42,13 @@ function addBallinBoard(board, indices) {
   });
 }
 
-function moveBall(from, to) {
+function moveBall(from, to) {}
 
-}
-
-export { getEmptyCells, getRandomIndices, addBallinBoard, moveBall };
+export {
+  updatingBoard,
+  getEmptyCells,
+  getRandomIndices,
+  getRandomColor,
+  addBallinBoard,
+  moveBall,
+};

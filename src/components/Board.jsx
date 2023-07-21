@@ -1,12 +1,10 @@
+import { updatingBoard } from "../util";
 import Cell from "./Cell";
 
 function Board({ board, boardLength }) {
   const width = boardLength * 50;
 
-  const updatedBoard = board.map((cell, index) => {
-    const uniqueId = `${index}`;
-    return { ...cell, id: uniqueId };
-  });
+  let updatedBoard = updatingBoard(board);
   return (
     <div id="board" style={{ width }}>
       {updatedBoard.map((cell) => (
