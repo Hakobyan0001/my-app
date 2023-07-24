@@ -6,47 +6,43 @@ let selectedBall = {
   areBall: false,
   id: null,
 };
-// const BALL = {
-//     isActive: isActive,
-//     color: BALL_COLOR,
-//   };
-function Cell({ hasBall, id }) {
+
+function Cell({ hasBall, id, board, setBoard }) {
+  let updatedBoard = board;
   const [isActive, setIsActive] = useState(false);
 
-  function handelCellClick() {
-    if (hasBall) {
-      if (selectedBall.areBall === false && isActive === false) {
-        selectedBall.areBall = true;
-        selectedBall.id = { id };
-        setIsActive((prevValue) => {
-          return !prevValue;
-        });
-      } else if (selectedBall.areBall === true && isActive === false) {
-        return null;
-      } else if (selectedBall.areBall === true && isActive === true) {
-        selectedBall.areBall = false;
-        selectedBall.id = null;
-        setIsActive((prevValue) => {
-          return !prevValue;
-        });
-      }
-    } else if (!hasBall && selectedBall.areBall) {
-      // hasball = true;
-      // setIsActive((prevValue) => {
-      //   return !prevValue;
-      // });
-      // selectedBall.areBall = false
-      //         selectedBall.id = null;
-      // moveBall(selectedBall.id, id);
-    }
+  function deActivate() {
+    selectedBall.areBall = false;
+    selectedBall.id = null;
+    setIsActive(false);
   }
 
+  function activate() {
+    selectedBall.areBall = true;
+    selectedBall.id = { id };
+    setIsActive(true);
+  }
+
+  function handleCellClick(event) {
+    const CLICKED_CELL_ID = event.target.id;
+    if (hasBall) {
+      if (!selectedBall.areBall && !isActive) {
+        activate();
+      } else if (selectedBall.areBall && !isActive) {
+        return;
+      } else if (selectedBall.areBall && isActive) {
+        deActivate();
+      }
+    } else if (!hasBall && selectedBall.areBall) {
+      setBoard(moveBall(selectedBall.id, CLICKED_CELL_ID, updatedBoard));
+      deActivate();
+    }
+  }
   return (
-    <div className="cell" onClick={handelCellClick} id={id}>
+    <div className="cell" onClick={handleCellClick} id={id}>
       {hasBall ? <Ball isActive={isActive} /> : null}
       {id}
     </div>
   );
 }
-
 export default Cell;

@@ -11,20 +11,25 @@ function App() {
     const CELL = {
       hasBall: false,
     };
+
+    // creating board and adding CELL objects
     let RENDERED_BOARD = Array.from({ length: BOARD_LENGTH ** 2 }, () => CELL);
 
+    // creating empty cells
     const emptyCellsIndices = getEmptyCells(RENDERED_BOARD);
     setEmptyCellsIndices(emptyCellsIndices);
 
+    // adding first balls in board
     let ballsIndices = getRandomIndices(emptyCellsIndices);
     addBallinBoard(RENDERED_BOARD, ballsIndices);
 
+    // rendering board in dom
     setBoard(RENDERED_BOARD);
   }, []);
 
   return (
     <div className="container">
-      <Board board={board} boardLength={BOARD_LENGTH} />
+      <Board board={board} boardLength={BOARD_LENGTH} setBoard={setBoard} />
     </div>
   );
 }
