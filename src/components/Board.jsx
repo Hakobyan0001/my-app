@@ -1,6 +1,6 @@
 import { updatingBoard } from "../util";
 import Cell from "./Cell";
-function Board({ board, boardLength, setBoard }) {
+function Board({ board, boardLength, setBoard, emptyCellsIndices }) {
   const width = boardLength * 50;
   let updatedBoard = updatingBoard(board);
   return (
@@ -12,6 +12,7 @@ function Board({ board, boardLength, setBoard }) {
           id={cell.id}
           board={board}
           setBoard={setBoard}
+          emptyCellsIndices={emptyCellsIndices}
         />
       ))}
     </div>

@@ -7,7 +7,7 @@ let selectedBall = {
   id: null,
 };
 
-function Cell({ hasBall, id, board, setBoard }) {
+function Cell({ hasBall, id, board, setBoard, emptyCellsIndices }) {
   let updatedBoard = board;
   const [isActive, setIsActive] = useState(false);
 
@@ -19,7 +19,7 @@ function Cell({ hasBall, id, board, setBoard }) {
 
   function activate() {
     selectedBall.areBall = true;
-    selectedBall.id = { id };
+    selectedBall.id = id;
     setIsActive(true);
   }
 
@@ -34,7 +34,14 @@ function Cell({ hasBall, id, board, setBoard }) {
         deActivate();
       }
     } else if (!hasBall && selectedBall.areBall) {
-      setBoard(moveBall(selectedBall.id, CLICKED_CELL_ID, updatedBoard));
+      setBoard(
+        moveBall(
+          selectedBall.id,
+          CLICKED_CELL_ID,
+          updatedBoard,
+          emptyCellsIndices
+        )
+      );
       deActivate();
     }
   }
