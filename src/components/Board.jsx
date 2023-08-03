@@ -1,18 +1,50 @@
-import { updatingBoard } from "../util";
 import Cell from "./Cell";
-function Board({ board, boardLength, setBoard, emptyCellsIndices }) {
+import { moveBall } from "../util";
+
+function Board({ board, boardLength, setBoard, emptyCellsIndices, setEmptyCells }) {
   const width = boardLength * 50;
-  let updatedBoard = updatingBoard(board);
+  function handleCellClick(id) {
+    const CELL = board.find(el => el.id === id)
+    const ACTIVE_BALL = board.find(el => el.active === true);
+    // console.log(ACTIVE_BALL?.id)
+
+    if (!CELL.hasball && ACTIVE_BALL) {
+      const newBoard = moveBall(
+        ACTIVE_BALL.id,
+        id,
+        board,
+      )
+      // TODO update empty indices and add balls
+      setBoard(newBoard);
+      return
+    }
+    if (!CELL.hasball) {
+      return;
+    }
+    if (CELL.hasball && CELL.active) {
+      const newBoard = board.map((el) => {
+        return el.id === id ? { ...el, active: false } : el;
+      })
+      setBoard(newBoard);
+      return
+    }
+    if (CELL.hasball && !CELL.active) {
+      const newBoard = board.map((el) => {
+        return el.id === id ? { ...el, active: true } : el;
+      })
+      setBoard(newBoard);
+    }
+  }
+
   return (
-    <div id="board" style={{ width }}>
-      {updatedBoard.map((cell) => (
+    <div id="board" style={{ width }} >
+      {board.map((cell) => (
         <Cell
           hasBall={cell.hasBall}
           key={cell.id}
           id={cell.id}
-          board={board}
-          setBoard={setBoard}
-          emptyCellsIndices={emptyCellsIndices}
+          handleCellClick={handleCellClick}
+          isActive={cell.active}
         />
       ))}
     </div>

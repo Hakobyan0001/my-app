@@ -1,10 +1,4 @@
-function updatingBoard(board) {
-  let newBoard = board.map((cell, index) => {
-    const uniqueId = `${index}`;
-    return { ...cell, id: uniqueId };
-  });
-  return newBoard;
-}
+
 
 function getEmptyCells(board) {
   let emptyCellsIndices = board.map((element, index) => index);
@@ -15,32 +9,31 @@ function getRandomIndices(emptyCellsIndices) {
   return Math.floor(Math.random() * emptyCellsIndices.length);
 }
 
-function addBallinBoard(board, emptyCellsIndices) {
+function addBallinBoard(board, emptyCells) {
   const BALLS_COUNT = 3;
-
+  let newBoard = [...board]
+  let newEmptyCells = [...emptyCells]
   for (let i = 0; i < BALLS_COUNT; i++) {
-    const RANDOM_INDEX = getRandomIndices(emptyCellsIndices);
-    const CHOSEN_INDEX = emptyCellsIndices[RANDOM_INDEX];
-    board[CHOSEN_INDEX] = {
-      ...board[CHOSEN_INDEX],
+    const RANDOM_INDEX = getRandomIndices(newEmptyCells);
+    const CHOSEN_INDEX = newEmptyCells[RANDOM_INDEX];
+    newBoard[CHOSEN_INDEX] = {
+      ...newBoard[CHOSEN_INDEX],
       hasBall: true,
     };
-    emptyCellsIndices.splice(RANDOM_INDEX, 1);
+    return { newBoard, newEmptyCells }
   }
 }
 
-function moveBall(from, to, board, emptyCellsIndices) {
-  const UPDATED_BOARD = [...board];
-  UPDATED_BOARD[from] = {
-    ...board[from],
-    hasBall: false,
-  };
-  UPDATED_BOARD[to] = {
-    ...board[to],
-    hasBall: true,
-  };
-
-  addBallinBoard(UPDATED_BOARD, emptyCellsIndices);
+function moveBall(from, to, board) {
+  const UPDATED_BOARD = board.map((el) => {
+    if (el.id === from) {
+      return { ...el, hasBall: false, active: false }
+    }
+    if (el.id === to) {
+      return { ...el, hasBall: true }
+    }
+    return el;
+  })
   return UPDATED_BOARD;
 }
 // function getRandomColor() {
@@ -49,7 +42,6 @@ function moveBall(from, to, board, emptyCellsIndices) {
 //   return COLORS[RANDOM_COLOR];
 // }
 export {
-  updatingBoard,
   getEmptyCells,
   //getRandomColor,
   addBallinBoard,
