@@ -1,8 +1,8 @@
-function Ball({ isActive }) {
+function Ball({ isActive, color }) {
   return isActive ? (
-    <div className={`ball red selectedBall`}></div>
+    <div className={`ball selectedBall ${color}`}></div>
   ) : (
-    <div className={`ball red `}></div>
+    <div className={`ball ${color} `}></div>
   );
 }
 

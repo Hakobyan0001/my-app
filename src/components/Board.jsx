@@ -1,41 +1,49 @@
 import Cell from "./Cell";
-import { moveBall } from "../util";
+import { addBallinBoard, getEmptyCells, moveBall } from "../util";
 
-function Board({ board, boardLength, setBoard, emptyCellsIndices, setEmptyCells }) {
+function Board({ board, boardLength, setBoard, setEmptyCells, colors, setBallColor }) {
   const width = boardLength * 50;
   function handleCellClick(id) {
     const CELL = board.find(el => el.id === id)
     const ACTIVE_BALL = board.find(el => el.active === true);
-    // console.log(ACTIVE_BALL?.id)
 
-    if (!CELL.hasball && ACTIVE_BALL) {
-      const newBoard = moveBall(
-        ACTIVE_BALL.id,
-        id,
-        board,
-      )
-      // TODO update empty indices and add balls
-      setBoard(newBoard);
-      return
-    }
-    if (!CELL.hasball) {
+    if (CELL.hasBall && ACTIVE_BALL && !CELL.active) {
       return;
     }
-    if (CELL.hasball && CELL.active) {
+
+    if (!CELL.hasBall && !ACTIVE_BALL) {
+      return;
+    }
+
+    if (!CELL.hasBall && ACTIVE_BALL) {
+
+      const updatedBoard = moveBall(ACTIVE_BALL.id, id, board)
+      // console.log(newBoard)
+
+      let updatedEmptyCells = getEmptyCells(updatedBoard);
+      const { newBoard, newEmptyCells } = addBallinBoard(updatedBoard, updatedEmptyCells, colors, setBallColor)
+
+      setEmptyCells(newEmptyCells);
+      setBoard(newBoard);
+
+      return;
+    }
+
+    if (CELL.hasBall && CELL.active) {
       const newBoard = board.map((el) => {
         return el.id === id ? { ...el, active: false } : el;
       })
       setBoard(newBoard);
-      return
+      return;
     }
-    if (CELL.hasball && !CELL.active) {
+
+    if (CELL.hasBall && !CELL.active) {
       const newBoard = board.map((el) => {
         return el.id === id ? { ...el, active: true } : el;
       })
       setBoard(newBoard);
     }
   }
-
   return (
     <div id="board" style={{ width }} >
       {board.map((cell) => (
@@ -45,6 +53,7 @@ function Board({ board, boardLength, setBoard, emptyCellsIndices, setEmptyCells 
           id={cell.id}
           handleCellClick={handleCellClick}
           isActive={cell.active}
+          ballColor={cell.ballColor}
         />
       ))}
     </div>
