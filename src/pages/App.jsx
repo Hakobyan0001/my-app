@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Board from "../components/Board";
 import { getEmptyCells, addBallinBoard } from "../util";
+import InputArea from "../components/inputArea";
 
 const COLORS = [
   { id: 0, color: "red" },
@@ -13,6 +14,7 @@ function App() {
   const [board, setBoard] = useState([]);
   const [emptyCells, setEmptyCells] = useState([]);
   const [ballColor, setBallColor] = useState();
+  const [boardLength, setBoardLength] = useState();
 
   useEffect(() => {
     // creating board and adding CELL objects
@@ -48,17 +50,16 @@ function App() {
   }, [board]);
 
   return (
-    <>
-      <div className="container">
-        <Board
-          board={board}
-          boardLength={BOARD_LENGTH}
-          setBoard={setBoard}
-          colors={COLORS}
-          setBallColor={setBallColor}
-        />
-      </div>
-    </>
+    <div className="container">
+      <InputArea setBoardLength={setBoardLength} />
+      <Board
+        board={board}
+        boardLength={BOARD_LENGTH}
+        setBoard={setBoard}
+        colors={COLORS}
+        setBallColor={setBallColor}
+      />
+    </div>
   );
 }
 export default App;
