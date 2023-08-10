@@ -7,7 +7,7 @@ const COLORS = [
   { id: 1, color: "green" },
   { id: 2, color: "blue" },
 ];
-const BOARD_LENGTH = 5;
+const BOARD_LENGTH = 8;
 
 function App() {
   const [board, setBoard] = useState([]);
@@ -48,17 +48,18 @@ function App() {
   }, [board]);
 
   return (
-    <div className="container">
-      <Board
-        board={board}
-        boardLength={BOARD_LENGTH}
-        setBoard={setBoard}
-        emptyCells={emptyCells}
-        setEmptyCells={setEmptyCells}
-        colors={COLORS}
-        setBallColor={setBallColor}
-      />
-    </div>
+    <>
+      <div className="container">
+        <Board
+          board={board}
+          boardLength={BOARD_LENGTH}
+          setBoard={setBoard}
+          colors={COLORS}
+          setBallColor={setBallColor}
+        />
+      </div>
+    </>
   );
 }
 export default App;
+export { BOARD_LENGTH };

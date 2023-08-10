@@ -1,14 +1,12 @@
 import Cell from "./Cell";
-import { addBallinBoard, getEmptyCells, moveBall } from "../util";
+import {
+  addBallinBoard,
+  checkingAndRemoving,
+  getEmptyCells,
+  moveBall,
+} from "../util";
 
-function Board({
-  board,
-  boardLength,
-  setBoard,
-  setEmptyCells,
-  colors,
-  setBallColor,
-}) {
+function Board({ board, boardLength, setBoard, colors, setBallColor }) {
   // console.log(colors);
   const width = boardLength * 50;
   function handleCellClick(id) {
@@ -24,9 +22,9 @@ function Board({
     }
 
     if (!CELL.hasBall && ACTIVE_BALL) {
-      const updatedBoard = moveBall(ACTIVE_BALL.id, id, board);
-
-      let updatedEmptyCells = getEmptyCells(updatedBoard);
+      let updatedBoard = moveBall(ACTIVE_BALL.id, id, board);
+      updatedBoard = checkingAndRemoving(updatedBoard);
+      const updatedEmptyCells = getEmptyCells(updatedBoard);
       const { newBoard } = addBallinBoard(
         updatedBoard,
         updatedEmptyCells,
