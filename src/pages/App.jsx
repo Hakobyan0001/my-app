@@ -13,8 +13,9 @@ function App() {
   const [board, setBoard] = useState([]);
   const [emptyCells, setEmptyCells] = useState([]);
   const [ballColor, setBallColor] = useState();
-  const [boardLength, setBoardLength] = useState(null);
-  const [ballsCount, setBallsCount] = useState(null);
+  const [boardLength, setBoardLength] = useState("");
+  const [ballsCount, setBallsCount] = useState("");
+  const [gamePoints, setGamePoints] = useState("")
 
   useEffect(() => {
     // creating board and adding CELL objects
@@ -39,6 +40,7 @@ function App() {
       ballsCount,
       boardLength
     );
+    setGamePoints(0)
     // rendering board in dom
     setBoard(newBoard);
   }, [boardLength, ballsCount]);
@@ -57,6 +59,7 @@ function App() {
       <InputArea boardLength={boardLength} setBoardLength={setBoardLength}
         ballsCount={ballsCount}
         setBallsCount={setBallsCount} />
+      <h2>Game Point - {gamePoints}</h2>
       <Board
         board={board}
         boardLength={boardLength}
@@ -64,6 +67,7 @@ function App() {
         colors={COLORS}
         setBallColor={setBallColor}
         ballsCount={ballsCount}
+        setGamePoints={setGamePoints}
       />
     </div>
   );

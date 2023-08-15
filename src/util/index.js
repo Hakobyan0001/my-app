@@ -62,7 +62,8 @@ function removeBall(board, from) {
   return board;
 }
 
-function removeBallsInHorizontalLine(board, boardLength) {
+function removeBallsInHorizontalLine(board, boardLength, setGamePoints
+) {
   const NEEDED_BALLS_COUNT = 5;
   let newBoard = [...board];
 
@@ -82,6 +83,11 @@ function removeBallsInHorizontalLine(board, boardLength) {
         for (let i = col - ballsCount + 1; i <= col; i++) {
           let removableBallsIndex = row * boardLength + i;
           newBoard = removeBall(newBoard, removableBallsIndex);
+          setGamePoints((prevValue) => {
+            return prevValue + 1;
+
+          })
+
         }
       }
     }
@@ -89,7 +95,8 @@ function removeBallsInHorizontalLine(board, boardLength) {
   return newBoard;
 }
 
-function removeBallsInVerticalLine(board, boardLength) {
+function removeBallsInVerticalLine(board, boardLength, setGamePoints
+) {
   const NEEDED_BALLS_COUNT = 5;
   let newBoard = [...board];
 
@@ -109,6 +116,11 @@ function removeBallsInVerticalLine(board, boardLength) {
         for (let i = row - ballsCount + 1; i <= row; i++) {
           let removableBallsIndex = col + boardLength * i;
           newBoard = removeBall(newBoard, removableBallsIndex);
+          setGamePoints((prevValue) => {
+            return prevValue + 1;
+
+          })
+
         }
       }
     }
@@ -116,7 +128,8 @@ function removeBallsInVerticalLine(board, boardLength) {
   return newBoard;
 }
 
-function removeBallsInDiagonalLine1(board, boardLength) {
+function removeBallsInDiagonalLine1(board, boardLength, setGamePoints
+) {
   const NEEDED_BALLS_COUNT = 5;
   let newBoard = [...board];
 
@@ -138,6 +151,11 @@ function removeBallsInDiagonalLine1(board, boardLength) {
             let removableBallsIndex =
               (row + angle) * boardLength + (col + angle);
             newBoard = removeBall(newBoard, removableBallsIndex);
+            setGamePoints((prevValue) => {
+              return prevValue + 1;
+
+            })
+
           }
         }
       }
@@ -146,7 +164,7 @@ function removeBallsInDiagonalLine1(board, boardLength) {
   return newBoard;
 }
 
-function removeBallsInDiagonalLine2(board, boardLength) {
+function removeBallsInDiagonalLine2(board, boardLength, setGamePoints) {
   const NEEDED_BALLS_COUNT = 5;
   let newBoard = [...board];
 
@@ -168,6 +186,10 @@ function removeBallsInDiagonalLine2(board, boardLength) {
             let removableBallsIndex =
               (row - angle) * boardLength + (col + angle);
             newBoard = removeBall(newBoard, removableBallsIndex);
+            setGamePoints((prevValue) => {
+              return prevValue + 1;
+
+            })
           }
         }
       }
@@ -176,12 +198,12 @@ function removeBallsInDiagonalLine2(board, boardLength) {
   return newBoard;
 }
 
-function checkingAndRemoving(board, boardLength) {
+function checkingAndRemoving(board, boardLength, setGamePoints) {
   let newBoard = [...board];
-  newBoard = removeBallsInHorizontalLine(newBoard, boardLength);
-  newBoard = removeBallsInVerticalLine(newBoard, boardLength);
-  newBoard = removeBallsInDiagonalLine1(newBoard, boardLength);
-  newBoard = removeBallsInDiagonalLine2(newBoard, boardLength);
+  newBoard = removeBallsInHorizontalLine(newBoard, boardLength, setGamePoints);
+  newBoard = removeBallsInVerticalLine(newBoard, boardLength, setGamePoints);
+  newBoard = removeBallsInDiagonalLine1(newBoard, boardLength, setGamePoints);
+  newBoard = removeBallsInDiagonalLine2(newBoard, boardLength, setGamePoints);
 
   return newBoard;
 }

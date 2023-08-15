@@ -6,8 +6,7 @@ import {
   moveBall,
 } from "../util";
 
-function Board({ board, boardLength, setBoard, colors, setBallColor, ballsCount }) {
-  // console.log(colors);
+function Board({ board, boardLength, setBoard, colors, setBallColor, ballsCount, setGamePoints }) {
   const width = boardLength * 50;
   function handleCellClick(id) {
     const CELL = board.find((el) => el.id === id);
@@ -23,7 +22,7 @@ function Board({ board, boardLength, setBoard, colors, setBallColor, ballsCount 
 
     if (!CELL.hasBall && ACTIVE_BALL) {
       let updatedBoard = moveBall(ACTIVE_BALL.id, id, board);
-      updatedBoard = checkingAndRemoving(updatedBoard, boardLength);
+      updatedBoard = checkingAndRemoving(updatedBoard, boardLength, setGamePoints);
       const updatedEmptyCells = getEmptyCells(updatedBoard);
       const { newBoard } = addBallinBoard(
         updatedBoard,
