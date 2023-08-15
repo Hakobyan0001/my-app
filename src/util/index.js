@@ -1,4 +1,3 @@
-import { BOARD_LENGTH } from "../pages/App";
 
 function getEmptyCells(board) {
   let emptyCellsIndices = board.filter((el) => !el.hasBall).map((el) => el.id);
@@ -15,12 +14,12 @@ function getRandomColor(ballColors) {
   return ChoosenColorIndex;
 }
 
-function addBallinBoard(board, emptyCells, COLORS, setBallColor) {
-  const BALLS_COUNT = 3;
+function addBallinBoard(board, emptyCells, COLORS, setBallColor, ballsCount, boardLength) {
+
   let newBoard = [...board];
   let newEmptyCells = [...emptyCells];
 
-  for (let i = 0; i < BALLS_COUNT; i++) {
+  for (let i = 0; i < ballsCount; i++) {
     const BALL_COLOR = getRandomColor(COLORS);
     setBallColor(`${COLORS[BALL_COLOR].color}`);
     const RANDOM_INDEX = getRandomIndices(newEmptyCells);
@@ -38,7 +37,7 @@ function addBallinBoard(board, emptyCells, COLORS, setBallColor) {
       (index) => index !== newEmptyCells[RANDOM_INDEX]
     );
   }
-  newBoard = checkingAndRemoving(newBoard, emptyCells);
+  newBoard = checkingAndRemoving(newBoard, boardLength);
 
   return { newBoard };
 }
@@ -63,15 +62,15 @@ function removeBall(board, from) {
   return board;
 }
 
-function removeBallsInHorizontalLine(board) {
+function removeBallsInHorizontalLine(board, boardLength) {
   const NEEDED_BALLS_COUNT = 5;
   let newBoard = [...board];
 
-  for (let row = 0; row < BOARD_LENGTH; row++) {
+  for (let row = 0; row < boardLength; row++) {
     let checkedBallColor = null;
     let ballsCount = 0;
-    for (let col = 0; col < BOARD_LENGTH; col++) {
-      const CELL = board[row * BOARD_LENGTH + col];
+    for (let col = 0; col < boardLength; col++) {
+      const CELL = board[row * boardLength + col];
 
       if (CELL.hasBall && CELL.ballColor === checkedBallColor) {
         ballsCount++;
@@ -81,7 +80,7 @@ function removeBallsInHorizontalLine(board) {
       }
       if (ballsCount === NEEDED_BALLS_COUNT) {
         for (let i = col - ballsCount + 1; i <= col; i++) {
-          let removableBallsIndex = row * BOARD_LENGTH + i;
+          let removableBallsIndex = row * boardLength + i;
           newBoard = removeBall(newBoard, removableBallsIndex);
         }
       }
@@ -90,15 +89,15 @@ function removeBallsInHorizontalLine(board) {
   return newBoard;
 }
 
-function removeBallsInVerticalLine(board) {
+function removeBallsInVerticalLine(board, boardLength) {
   const NEEDED_BALLS_COUNT = 5;
   let newBoard = [...board];
 
-  for (let col = 0; col < BOARD_LENGTH; col++) {
+  for (let col = 0; col < boardLength; col++) {
     let checkedBallColor = null;
     let ballsCount = 0;
-    for (let row = 0; row < BOARD_LENGTH; row++) {
-      const CELL = board[row * BOARD_LENGTH + col];
+    for (let row = 0; row < boardLength; row++) {
+      const CELL = board[row * boardLength + col];
 
       if (CELL.hasBall && CELL.ballColor === checkedBallColor) {
         ballsCount++;
@@ -108,7 +107,7 @@ function removeBallsInVerticalLine(board) {
       }
       if (ballsCount === NEEDED_BALLS_COUNT) {
         for (let i = row - ballsCount + 1; i <= row; i++) {
-          let removableBallsIndex = col + BOARD_LENGTH * i;
+          let removableBallsIndex = col + boardLength * i;
           newBoard = removeBall(newBoard, removableBallsIndex);
         }
       }
@@ -117,17 +116,17 @@ function removeBallsInVerticalLine(board) {
   return newBoard;
 }
 
-function removeBallsInDiagonalLine1(board) {
+function removeBallsInDiagonalLine1(board, boardLength) {
   const NEEDED_BALLS_COUNT = 5;
   let newBoard = [...board];
 
-  for (let row = 0; row <= BOARD_LENGTH - NEEDED_BALLS_COUNT; row++) {
-    for (let col = 0; col <= BOARD_LENGTH - NEEDED_BALLS_COUNT; col++) {
+  for (let row = 0; row <= boardLength - NEEDED_BALLS_COUNT; row++) {
+    for (let col = 0; col <= boardLength - NEEDED_BALLS_COUNT; col++) {
       let checkedBallColor = null;
       let ballsCount = 0;
 
       for (let angle = 0; angle < NEEDED_BALLS_COUNT; angle++) {
-        const CELL = board[(row + angle) * BOARD_LENGTH + (col + angle)];
+        const CELL = board[(row + angle) * boardLength + (col + angle)];
         if (CELL.hasBall && CELL.ballColor === checkedBallColor) {
           ballsCount++;
         } else {
@@ -137,7 +136,7 @@ function removeBallsInDiagonalLine1(board) {
         if (ballsCount === NEEDED_BALLS_COUNT) {
           for (let angle = 0; angle < ballsCount; angle++) {
             let removableBallsIndex =
-              (row + angle) * BOARD_LENGTH + (col + angle);
+              (row + angle) * boardLength + (col + angle);
             newBoard = removeBall(newBoard, removableBallsIndex);
           }
         }
@@ -147,17 +146,17 @@ function removeBallsInDiagonalLine1(board) {
   return newBoard;
 }
 
-function removeBallsInDiagonalLine2(board) {
+function removeBallsInDiagonalLine2(board, boardLength) {
   const NEEDED_BALLS_COUNT = 5;
   let newBoard = [...board];
 
-  for (let row = BOARD_LENGTH - 1; row >= NEEDED_BALLS_COUNT - 1; row--) {
-    for (let col = 0; col <= BOARD_LENGTH - NEEDED_BALLS_COUNT; col++) {
+  for (let row = boardLength - 1; row >= NEEDED_BALLS_COUNT - 1; row--) {
+    for (let col = 0; col <= boardLength - NEEDED_BALLS_COUNT; col++) {
       let checkedBallColor = null;
       let ballsCount = 0;
 
       for (let angle = 0; angle < NEEDED_BALLS_COUNT; angle++) {
-        const CELL = board[(row - angle) * BOARD_LENGTH + (col + angle)];
+        const CELL = board[(row - angle) * boardLength + (col + angle)];
         if (CELL.hasBall && CELL.ballColor === checkedBallColor) {
           ballsCount++;
         } else {
@@ -167,7 +166,7 @@ function removeBallsInDiagonalLine2(board) {
         if (ballsCount === NEEDED_BALLS_COUNT) {
           for (let angle = 0; angle < ballsCount; angle++) {
             let removableBallsIndex =
-              (row - angle) * BOARD_LENGTH + (col + angle);
+              (row - angle) * boardLength + (col + angle);
             newBoard = removeBall(newBoard, removableBallsIndex);
           }
         }
@@ -177,12 +176,12 @@ function removeBallsInDiagonalLine2(board) {
   return newBoard;
 }
 
-function checkingAndRemoving(board) {
+function checkingAndRemoving(board, boardLength) {
   let newBoard = [...board];
-  newBoard = removeBallsInHorizontalLine(newBoard);
-  newBoard = removeBallsInVerticalLine(newBoard);
-  newBoard = removeBallsInDiagonalLine1(newBoard);
-  newBoard = removeBallsInDiagonalLine2(newBoard);
+  newBoard = removeBallsInHorizontalLine(newBoard, boardLength);
+  newBoard = removeBallsInVerticalLine(newBoard, boardLength);
+  newBoard = removeBallsInDiagonalLine1(newBoard, boardLength);
+  newBoard = removeBallsInDiagonalLine2(newBoard, boardLength);
 
   return newBoard;
 }

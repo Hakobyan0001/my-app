@@ -1,20 +1,39 @@
+body {
+  background-color: #F3E9DC;
+}
+
 /* main container*/
 .container {
   display: flex;
   flex-direction: column;
   align-items: center;
+  text-align: center;
+  margin-bottom: 50px;
 }
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+
+}
+
 .input-group {
   margin-left: auto;
   margin-right: auto;
+
+}
+
+.btn-secondary {
+  margin: auto;
 }
 
 /* board side */
 #board {
-  background-color: #eee;
   display: flex;
   flex-wrap: wrap;
   margin-top: 30px;
+  background-color: #F4F1F1;
+
 }
 
 .cell {

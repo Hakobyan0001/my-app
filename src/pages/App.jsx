@@ -8,18 +8,18 @@ const COLORS = [
   { id: 1, color: "green" },
   { id: 2, color: "blue" },
 ];
-const BOARD_LENGTH = 8;
 
 function App() {
   const [board, setBoard] = useState([]);
   const [emptyCells, setEmptyCells] = useState([]);
   const [ballColor, setBallColor] = useState();
-  const [boardLength, setBoardLength] = useState();
+  const [boardLength, setBoardLength] = useState(null);
+  const [ballsCount, setBallsCount] = useState(null);
 
   useEffect(() => {
     // creating board and adding CELL objects
-    let RENDERED_BOARD = Array.from(
-      { length: BOARD_LENGTH ** 2 },
+    const RENDERED_BOARD = Array.from(
+      { length: boardLength ** 2 },
       (el, index) => ({
         hasBall: false,
         id: index,
@@ -35,11 +35,13 @@ function App() {
       RENDERED_BOARD,
       emptyCellsIndices,
       COLORS,
-      setBallColor
+      setBallColor,
+      ballsCount,
+      boardLength
     );
     // rendering board in dom
     setBoard(newBoard);
-  }, []);
+  }, [boardLength, ballsCount]);
 
   useEffect(() => {
     if (!board.length) {
@@ -51,16 +53,19 @@ function App() {
 
   return (
     <div className="container">
-      <InputArea setBoardLength={setBoardLength} />
+      <h1>Lines Game</h1>
+      <InputArea boardLength={boardLength} setBoardLength={setBoardLength}
+        ballsCount={ballsCount}
+        setBallsCount={setBallsCount} />
       <Board
         board={board}
-        boardLength={BOARD_LENGTH}
+        boardLength={boardLength}
         setBoard={setBoard}
         colors={COLORS}
         setBallColor={setBallColor}
+        ballsCount={ballsCount}
       />
     </div>
   );
 }
 export default App;
-export { BOARD_LENGTH };

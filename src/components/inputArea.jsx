@@ -1,15 +1,24 @@
-export default function InputArea(setBoardLength) {
-  function handleClick() {}
+
+export default function InputArea({ setBoardLength, setBallsCount }) {
+  let boardLength, ballsCount;
+  function handleSubmit(e) {
+    e.preventDefault();
+    setBoardLength(boardLength);
+    setBallsCount(ballsCount);
+
+  }
   return (
-    <form>
+    <form className="form-group" onSubmit={handleSubmit}>
       <label>
-        Input board length: <input type="text" name="boardLength" value="" />
-        <hr />
-        Input number of balls to be added:{" "}
-        <input type="text" name="ballsCount" value="" />
-        <hr />
+        Input board length
+        <input className="form-control" type="text" value={boardLength} onChange={(e) => boardLength = e.target.value} />
       </label>
-      <button type="submit" onClick={handleClick}>
+      <label>
+        Input number of balls to be added
+        <input className="form-control" type="text" value={ballsCount} onChange={(e) => ballsCount = e.target.value} />
+
+      </label>
+      <button className="btn btn-secondary" type="submit">
         Submit
       </button>
     </form>
