@@ -14,7 +14,7 @@ function getRandomColor(ballColors) {
   return ChoosenColorIndex;
 }
 
-function addBallinBoard(board, emptyCells, COLORS, setBallColor, ballsCount, boardLength) {
+function addBallinBoard(board, emptyCells, COLORS, setBallColor, ballsCount, boardLength, setGamePoints) {
 
   let newBoard = [...board];
   let newEmptyCells = [...emptyCells];
@@ -37,8 +37,7 @@ function addBallinBoard(board, emptyCells, COLORS, setBallColor, ballsCount, boa
       (index) => index !== newEmptyCells[RANDOM_INDEX]
     );
   }
-  newBoard = checkingAndRemoving(newBoard, boardLength);
-
+  newBoard = checkingAndRemoving(newBoard, boardLength, setGamePoints);
   return { newBoard };
 }
 
@@ -62,8 +61,7 @@ function removeBall(board, from) {
   return board;
 }
 
-function removeBallsInHorizontalLine(board, boardLength, setGamePoints
-) {
+function removeBallsInHorizontalLine(board, boardLength, setGamePoints) {
   const NEEDED_BALLS_COUNT = 5;
   let newBoard = [...board];
 
@@ -213,5 +211,5 @@ export {
   getRandomColor,
   addBallinBoard,
   moveBall,
-  checkingAndRemoving,
+  checkingAndRemoving
 };

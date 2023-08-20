@@ -23,6 +23,10 @@ body {
 
 }
 
+.button-group {
+  display: flex;
+}
+
 .btn-secondary {
   margin: auto;
 }

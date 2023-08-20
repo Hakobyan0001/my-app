@@ -8,6 +8,7 @@ import {
 
 function Board({ board, boardLength, setBoard, colors, setBallColor, ballsCount, setGamePoints }) {
   const width = boardLength * 50;
+
   function handleCellClick(id) {
     const CELL = board.find((el) => el.id === id);
     const ACTIVE_BALL = board.find((el) => el.active === true);
@@ -21,18 +22,15 @@ function Board({ board, boardLength, setBoard, colors, setBallColor, ballsCount,
     }
 
     if (!CELL.hasBall && ACTIVE_BALL) {
+
       let updatedBoard = moveBall(ACTIVE_BALL.id, id, board);
       updatedBoard = checkingAndRemoving(updatedBoard, boardLength, setGamePoints);
       const updatedEmptyCells = getEmptyCells(updatedBoard);
-      const { newBoard } = addBallinBoard(
-        updatedBoard,
-        updatedEmptyCells,
-        colors,
-        setBallColor,
-        ballsCount
-      );
+      const { newBoard } = addBallinBoard(updatedBoard, updatedEmptyCells, colors, setBallColor, ballsCount, boardLength, setGamePoints);
       setBoard(newBoard);
+
       return;
+
     }
 
     if (CELL.hasBall && CELL.active) {

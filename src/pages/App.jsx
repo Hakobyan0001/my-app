@@ -16,6 +16,7 @@ function App() {
   const [boardLength, setBoardLength] = useState("");
   const [ballsCount, setBallsCount] = useState("");
   const [gamePoints, setGamePoints] = useState("")
+  const [dummyTrigger, setDummyTrigger] = useState(false);
 
   useEffect(() => {
     // creating board and adding CELL objects
@@ -43,7 +44,7 @@ function App() {
     setGamePoints(0)
     // rendering board in dom
     setBoard(newBoard);
-  }, [boardLength, ballsCount]);
+  }, [boardLength, ballsCount, dummyTrigger]);
 
   useEffect(() => {
     if (!board.length) {
@@ -51,14 +52,17 @@ function App() {
     }
     const UPDATED_EMPTY_CELLS = getEmptyCells(board);
     setEmptyCells(UPDATED_EMPTY_CELLS);
+    if (board.every(el => el.hasBall)) {
+      setTimeout(alert("game over"), 1000);
+    }
   }, [board]);
 
   return (
     <div className="container">
       <h1>Lines Game</h1>
-      <InputArea boardLength={boardLength} setBoardLength={setBoardLength}
-        ballsCount={ballsCount}
-        setBallsCount={setBallsCount} />
+      <InputArea setBoardLength={setBoardLength}
+        setBallsCount={setBallsCount}
+        setDummyTrigger={setDummyTrigger} />
       <h2>Game Point - {gamePoints}</h2>
       <Board
         board={board}
