@@ -5,7 +5,6 @@ function Cell({ hasBall, id, handleCellClick, isActive, ballColor }) {
   return (
     <div className="cell" onClick={() => handleCellClick(id)} id={id}>
       {hasBall ? <Ball isActive={isActive} color={ballColor} /> : null}
-      {id}
     </div>
   );
 }

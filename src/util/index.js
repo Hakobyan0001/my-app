@@ -1,4 +1,3 @@
-
 function getEmptyCells(board) {
   let emptyCellsIndices = board.filter((el) => !el.hasBall).map((el) => el.id);
 
@@ -14,8 +13,15 @@ function getRandomColor(ballColors) {
   return ChoosenColorIndex;
 }
 
-function addBallinBoard(board, emptyCells, COLORS, setBallColor, ballsCount, boardLength, setGamePoints) {
-
+function addBallinBoard(
+  board,
+  emptyCells,
+  COLORS,
+  setBallColor,
+  ballsCount,
+  boardLength,
+  setGamePoints
+) {
   let newBoard = [...board];
   let newEmptyCells = [...emptyCells];
 
@@ -83,9 +89,7 @@ function removeBallsInHorizontalLine(board, boardLength, setGamePoints) {
           newBoard = removeBall(newBoard, removableBallsIndex);
           setGamePoints((prevValue) => {
             return prevValue + 1;
-
-          })
-
+          });
         }
       }
     }
@@ -93,8 +97,7 @@ function removeBallsInHorizontalLine(board, boardLength, setGamePoints) {
   return newBoard;
 }
 
-function removeBallsInVerticalLine(board, boardLength, setGamePoints
-) {
+function removeBallsInVerticalLine(board, boardLength, setGamePoints) {
   const NEEDED_BALLS_COUNT = 5;
   let newBoard = [...board];
 
@@ -116,9 +119,7 @@ function removeBallsInVerticalLine(board, boardLength, setGamePoints
           newBoard = removeBall(newBoard, removableBallsIndex);
           setGamePoints((prevValue) => {
             return prevValue + 1;
-
-          })
-
+          });
         }
       }
     }
@@ -126,8 +127,7 @@ function removeBallsInVerticalLine(board, boardLength, setGamePoints
   return newBoard;
 }
 
-function removeBallsInDiagonalLine1(board, boardLength, setGamePoints
-) {
+function removeBallsInDiagonalLine1(board, boardLength, setGamePoints) {
   const NEEDED_BALLS_COUNT = 5;
   let newBoard = [...board];
 
@@ -151,9 +151,7 @@ function removeBallsInDiagonalLine1(board, boardLength, setGamePoints
             newBoard = removeBall(newBoard, removableBallsIndex);
             setGamePoints((prevValue) => {
               return prevValue + 1;
-
-            })
-
+            });
           }
         }
       }
@@ -186,8 +184,7 @@ function removeBallsInDiagonalLine2(board, boardLength, setGamePoints) {
             newBoard = removeBall(newBoard, removableBallsIndex);
             setGamePoints((prevValue) => {
               return prevValue + 1;
-
-            })
+            });
           }
         }
       }
@@ -206,10 +203,26 @@ function checkingAndRemoving(board, boardLength, setGamePoints) {
   return newBoard;
 }
 
+class Store {
+  set(key, value) {
+    const currentItem = JSON.stringify(value);
+    localStorage.setItem(key, currentItem);
+  }
+  get(key) {
+    const value = localStorage.getItem(key);
+    return JSON.parse(value);
+  }
+  clear() {
+    localStorage.clear();
+  }
+}
+const history = new Store();
+
 export {
   getEmptyCells,
   getRandomColor,
   addBallinBoard,
   moveBall,
-  checkingAndRemoving
+  checkingAndRemoving,
+  history,
 };

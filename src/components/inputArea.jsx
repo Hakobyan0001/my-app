@@ -1,12 +1,16 @@
 import { useState } from "react";
+import { history } from "../util";
 
 let currentBorderLength;
 let currentBallsCount;
 
-export default function InputArea({ setBoardLength, setBallsCount, setDummyTrigger }) {
+export default function InputArea({
+  setBoardLength,
+  setBallsCount,
+  setDummyTrigger,
+}) {
   const [boardLength, setBoardLengthValue] = useState("");
   const [ballsCount, setBallsCountValue] = useState("");
-
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -26,6 +30,7 @@ export default function InputArea({ setBoardLength, setBallsCount, setDummyTrigg
   }
 
   function restartClick() {
+    history.clear();
     setBoardLength(currentBorderLength);
     setBallsCount(currentBallsCount);
     setDummyTrigger((prevState) => !prevState);
@@ -35,18 +40,37 @@ export default function InputArea({ setBoardLength, setBallsCount, setDummyTrigg
       <form className="form-group" onSubmit={handleSubmit}>
         <label>
           Input board length
-          <input className="form-control" type="text" name="boardLength" value={boardLength} onChange={(e) => setBoardLengthValue(e.target.value)} />
+          <input
+            className="form-control"
+            type="text"
+            name="boardLength"
+            value={boardLength}
+            onChange={(e) => setBoardLengthValue(e.target.value)}
+          />
         </label>
         <label>
           Input number of balls to be added
-          <input className="form-control" type="text" name="ballsCount" value={ballsCount} onChange={(e) => setBallsCountValue(e.target.value)} />
-
+          <input
+            className="form-control"
+            type="text"
+            name="ballsCount"
+            value={ballsCount}
+            onChange={(e) => setBallsCountValue(e.target.value)}
+          />
         </label>
         <div className="button-group">
-          <button className="btn btn-secondary" type="submit">Submit</button>
-          <button className="btn btn-secondary" type="button" onClick={restartClick}>Restart
+          <button className="btn btn-secondary" type="submit">
+            Submit
+          </button>
+          <button
+            className="btn btn-secondary"
+            type="button"
+            onClick={restartClick}
+          >
+            Restart
           </button>
         </div>
       </form>
-    </>);
+    </>
+  );
 }
