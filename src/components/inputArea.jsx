@@ -1,27 +1,20 @@
 import { useState } from "react";
 import { history } from "../util";
 
-let currentBorderLength;
-let currentBallsCount;
-
-export default function InputArea({
-  setBoardLength,
-  setBallsCount,
-  setDummyTrigger,
-}) {
-  const [boardLength, setBoardLengthValue] = useState("");
-  const [ballsCount, setBallsCountValue] = useState("");
+function InputArea({ setBoardLength, setBallsCount, setDummyTrigger }) {
+  const [boardLengthValue, setBoardLengthValue] = useState("");
+  const [ballsCountValue, setBallsCountValue] = useState("");
 
   function handleSubmit(e) {
     e.preventDefault();
-    if (!boardLength || !ballsCount) {
+    if (!boardLengthValue || !ballsCountValue) {
       return;
     }
-    setBoardLength(boardLength);
-    setBallsCount(ballsCount);
+    setBoardLength(boardLengthValue);
+    setBallsCount(ballsCountValue);
 
-    currentBorderLength = boardLength;
-    currentBallsCount = ballsCount;
+    history.set("currentBoardLength", boardLengthValue);
+    history.set("currentBallsCount", ballsCountValue);
 
     setDummyTrigger((prevState) => !prevState);
 
@@ -30,10 +23,13 @@ export default function InputArea({
   }
 
   function restartClick() {
-    history.clear();
-    setBoardLength(currentBorderLength);
-    setBallsCount(currentBallsCount);
     setDummyTrigger((prevState) => !prevState);
+    setBoardLength(history.get("currentBoardLength"));
+    setBallsCount(history.get("currentBallsCount"));
+    history.remove("board");
+    history.remove("boardLength");
+    history.remove("ballsCount");
+    history.remove("gamePoints");
   }
   return (
     <>
@@ -44,7 +40,7 @@ export default function InputArea({
             className="form-control"
             type="text"
             name="boardLength"
-            value={boardLength}
+            value={boardLengthValue}
             onChange={(e) => setBoardLengthValue(e.target.value)}
           />
         </label>
@@ -54,7 +50,7 @@ export default function InputArea({
             className="form-control"
             type="text"
             name="ballsCount"
-            value={ballsCount}
+            value={ballsCountValue}
             onChange={(e) => setBallsCountValue(e.target.value)}
           />
         </label>
@@ -74,3 +70,5 @@ export default function InputArea({
     </>
   );
 }
+
+export default InputArea;

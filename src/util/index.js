@@ -1,3 +1,5 @@
+const NEEDED_BALLS_COUNT = 5;
+
 function getEmptyCells(board) {
   let emptyCellsIndices = board.filter((el) => !el.hasBall).map((el) => el.id);
 
@@ -68,7 +70,6 @@ function removeBall(board, from) {
 }
 
 function removeBallsInHorizontalLine(board, boardLength, setGamePoints) {
-  const NEEDED_BALLS_COUNT = 5;
   let newBoard = [...board];
 
   for (let row = 0; row < boardLength; row++) {
@@ -98,7 +99,6 @@ function removeBallsInHorizontalLine(board, boardLength, setGamePoints) {
 }
 
 function removeBallsInVerticalLine(board, boardLength, setGamePoints) {
-  const NEEDED_BALLS_COUNT = 5;
   let newBoard = [...board];
 
   for (let col = 0; col < boardLength; col++) {
@@ -128,7 +128,6 @@ function removeBallsInVerticalLine(board, boardLength, setGamePoints) {
 }
 
 function removeBallsInDiagonalLine1(board, boardLength, setGamePoints) {
-  const NEEDED_BALLS_COUNT = 5;
   let newBoard = [...board];
 
   for (let row = 0; row <= boardLength - NEEDED_BALLS_COUNT; row++) {
@@ -161,7 +160,6 @@ function removeBallsInDiagonalLine1(board, boardLength, setGamePoints) {
 }
 
 function removeBallsInDiagonalLine2(board, boardLength, setGamePoints) {
-  const NEEDED_BALLS_COUNT = 5;
   let newBoard = [...board];
 
   for (let row = boardLength - 1; row >= NEEDED_BALLS_COUNT - 1; row--) {
@@ -212,8 +210,8 @@ class Store {
     const value = localStorage.getItem(key);
     return JSON.parse(value);
   }
-  clear() {
-    localStorage.clear();
+  remove(key) {
+    localStorage.removeItem(key);
   }
 }
 const history = new Store();

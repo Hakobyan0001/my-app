@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Board from "../components/Board";
 import { getEmptyCells, addBallinBoard, history } from "../util";
 import InputArea from "../components/inputArea";
+import GameOver from "../components/gameOver";
 
 const COLORS = [
   { id: 0, color: "red" },
@@ -18,11 +19,23 @@ function App() {
   const [dummyTrigger, setDummyTrigger] = useState(false);
 
   useEffect(() => {
-    if (history.get("board") !== null) {
-      setBoard(history.get("board"));
-      setBallsCount(history.get("ballsCount"));
-      setBoardLength(history.get("boardLength"));
-      setGamePoints(history.get("gamePoints"));
+    const CURRENT_BOARD = history.get("board");
+    const CURRENT_BOARD_LENGTH = history.get("boardLength");
+    const CURRENT_BALLS_COUNT = history.get("ballsCount");
+    const CURRENT_GAME_POINTS = history.get("gamePoints");
+
+    if (
+      (boardLength === CURRENT_BOARD_LENGTH &&
+        ballsCount === CURRENT_BALLS_COUNT) ||
+      (!boardLength &&
+        !ballsCount &&
+        CURRENT_BALLS_COUNT &&
+        CURRENT_BOARD_LENGTH)
+    ) {
+      setBoard(CURRENT_BOARD);
+      setBallsCount(CURRENT_BALLS_COUNT);
+      setBoardLength(CURRENT_BOARD_LENGTH);
+      setGamePoints(CURRENT_GAME_POINTS);
 
       return;
     }
@@ -57,9 +70,6 @@ function App() {
     if (!board.length) {
       return;
     }
-    if (board.every((el) => el.hasBall)) {
-      setTimeout(alert("game over"), 1000);
-    }
     history.set("board", board);
     history.set("boardLength", boardLength);
     history.set("gamePoints", gamePoints);
@@ -75,6 +85,7 @@ function App() {
         setDummyTrigger={setDummyTrigger}
       />
       <h2>Game Point - {gamePoints}</h2>
+      <GameOver board={board} />
       <Board
         board={board}
         boardLength={boardLength}

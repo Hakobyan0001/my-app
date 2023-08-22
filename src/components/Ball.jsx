@@ -1,5 +1,4 @@
 function Ball({ isActive, color }) {
-  // console.log(color);
   return isActive ? (
     <div className={`ball selectedBall ${color}`}></div>
   ) : (
